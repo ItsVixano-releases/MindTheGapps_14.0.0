@@ -1,0 +1,40 @@
+name: MindTheGapps (14.0.0)
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Clone MindTheGapps repo
+      run: |
+        git clone https://gitlab.com/MindTheGapps/vendor_gapps --depth=1 -b upsilon
+    - name: Build MindTheGapps (arm)
+      run: |
+        cd vendor_gapps/
+        make gapps_arm
+    - name: Build MindTheGapps (arm64)
+      run: |
+        cd vendor_gapps/
+        make gapps_arm64
+    - name: Build MindTheGapps (x86)
+      run: |
+        cd vendor_gapps/
+        make gapps_x86
+    - name: Build MindTheGapps (x86_64)
+      run: |
+        cd vendor_gapps/
+        make gapps_x86_64
+    - uses: marvinpinto/action-automatic-releases@latest
+      if: github.ref == 'refs/heads/master'
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "MindTheGapps 14.0.0"
+        files: |
+          vendor_gapps/out/MindTheGapps-*.zip
+          vendor_gapps/out/MindTheGapps-*.zip.md5sum
