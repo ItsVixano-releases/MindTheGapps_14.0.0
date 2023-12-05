@@ -1,6 +1,8 @@
 name: MindTheGapps (14.0.0)
 
 on:
+  schedule:
+    - cron: '0 0 * * 0'
   push:
   workflow_dispatch:
 
