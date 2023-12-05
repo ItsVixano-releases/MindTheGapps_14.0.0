@@ -2,6 +2,7 @@ name: MindTheGapps (14.0.0)
 
 on:
   push:
+  workflow_dispatch:
 
 jobs:
   build:
